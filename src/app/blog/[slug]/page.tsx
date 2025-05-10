@@ -1,7 +1,7 @@
 import { SiteFooter } from "@/layouts/SiteFooter";
 import { SiteHeader } from "@/layouts/SiteHeader";
 import { getAllPostSlugs, getPostBySlug } from "@/lib/db-service";
-import IndividualPost from "@/page_layout/BlogPost";
+import IndividualPost from "@/layouts/BlogPost";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {

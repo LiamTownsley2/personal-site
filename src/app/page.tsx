@@ -1,13 +1,16 @@
+import IndexHero from "@/components/index-hero";
+import Main from "@/components/page-section";
 import { SiteFooter } from "@/layouts/SiteFooter";
 import { SiteHeader } from "@/layouts/SiteHeader";
-import Home from "@/page_layout/Home";
 
 
 export default function Index() {
   return (
     <div className="flex flex-col min-h-screen">
       <SiteHeader />
-      <Home />
+      <Main>
+        <IndexHero />
+      </Main>
       <SiteFooter />
     </div>
   );

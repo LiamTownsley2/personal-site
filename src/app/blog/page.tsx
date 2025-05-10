@@ -1,7 +1,7 @@
 import { SiteFooter } from "@/layouts/SiteFooter"
 import { SiteHeader } from "@/layouts/SiteHeader"
 import { getAllPosts } from "@/lib/db-service"
-import Blog from "@/page_layout/BlogList"
+import Blog from "@/layouts/BlogList"
 import { notFound } from "next/navigation"
 
 export default async function BlogPage() {

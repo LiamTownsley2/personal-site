@@ -1,6 +1,6 @@
 import { getAllProjectIds, getProjectById } from "@/lib/db-service";
 import { notFound } from "next/navigation";
-import ProjectPage from "@/page_layout/ProjectPost";
+import ProjectPage from "@/layouts/ProjectPost";
 import { SiteHeader } from "@/layouts/SiteHeader";
 import { SiteFooter } from "@/layouts/SiteFooter";
 

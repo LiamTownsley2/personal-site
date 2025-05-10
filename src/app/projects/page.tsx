@@ -1,7 +1,7 @@
 import { getAllProjects } from "@/lib/db-service"
 import { notFound } from "next/navigation"
 import { SiteHeader } from "@/layouts/SiteHeader"
-import ProjectList from "@/page_layout/ProjectList"
+import ProjectList from "@/layouts/ProjectList"
 import { SiteFooter } from "@/layouts/SiteFooter"
 
 export default async function ProjectsPage() {
