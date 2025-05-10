@@ -1,8 +1,13 @@
-import { getProjectById } from "@/lib/db-service";
+import { getAllProjectIds, getProjectById } from "@/lib/db-service";
 import { notFound } from "next/navigation";
 import ProjectPage from "@/page_layout/ProjectPost";
 import { SiteHeader } from "@/layouts/SiteHeader";
 import { SiteFooter } from "@/layouts/SiteFooter";
+
+export async function generateStaticParams() {
+    const slugs = await getAllProjectIds()
+    return slugs.map(id => ({ id }))
+}
 
 export default async function IndividualProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
