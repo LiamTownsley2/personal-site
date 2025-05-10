@@ -3,6 +3,8 @@ import { Inter } from "next/font/google"
 import "@/app/globals.css"
 import { SearchProvider } from "@/context/search-context";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({
   variable: "--font-inter",
@@ -30,6 +32,8 @@ export default function RootLayout({
           >
           <SearchProvider>
             {children}
+            <Analytics />
+            <SpeedInsights />
           </SearchProvider>
         </ThemeProvider>
       </body>
