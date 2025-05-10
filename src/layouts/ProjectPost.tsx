@@ -26,7 +26,9 @@ export default async function Project({ project }: { project: ProjectType }) {
                     <ProjectImage project={project} />
                     <div className="space-y-4">
                         <ProjectDetails project={project} />
-                        <ButtonRow buttons={PAGE_BUTTONS} justify="justify-start" gap="gap-4" />
+                        <div className="md:justify-items-start">
+                            <ButtonRow buttons={PAGE_BUTTONS} justify="justify-center" gap="gap-4" />
+                        </div>
                     </div>
                 </SideBySide>
             </div>

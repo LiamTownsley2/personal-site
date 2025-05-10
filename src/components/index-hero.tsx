@@ -26,7 +26,7 @@ export default function IndexHero() {
     return (
         <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
-                <div className="flex flex-col justify-center space-y-4 ml-24">
+                <div className="flex flex-col justify-center space-y-4 md:ml-24">
                     <IndexHeader title="Hi, I&apos;m Liam Townsley" subtitle="A passionate Cybersecurity Engineer specializing in securing digital experiences." />
                     <ButtonRow buttons={CTA_BUTTONS} justify="justify-start" gap="gap-2" />
                     <SocialList socials={CONNECT_LINKS} variant={"ghost"} />

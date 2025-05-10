@@ -7,16 +7,19 @@ export type ButtonParams = {
     href: string,
     variant: ButtonVarients,
     icon?: ElementType,
-    label: string,
+    label?: string,
+    margin_toggle?: boolean
     rtl_icon?: boolean
     className?: string
+    onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+    children?: React.ReactNode
 }
 export function Button(params: ButtonParams) {
     const margin = params.rtl_icon ? "ml-2" : "mr-2";
-    const styling = `${margin} h-4 w-4`;
+    const styling = `${params.margin_toggle && margin} h-4 w-4`;
     return (
         <Link href={params.href}>
-            <UIButton variant={params.variant} className={params.className}>
+            <UIButton variant={params.variant} className={params.className} onClick={params.onClick}>
                 {params.rtl_icon ? (
                     <>
                         {params.label}

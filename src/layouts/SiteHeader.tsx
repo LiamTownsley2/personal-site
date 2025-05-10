@@ -1,12 +1,16 @@
 "use client";
 
+import { Button } from "@/components/button";
 import { SearchInput } from "@/components/search-input";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useMediaQuery } from "@react-hook/media-query";
 
 export function SiteHeader() {
   const currentPath = usePathname();
+  const isSmallScreen = useMediaQuery("(max-width: 750px)");
 
   const navItems = [
     { name: 'Home', href: '/', },
@@ -16,7 +20,7 @@ export function SiteHeader() {
   ];
 
   const navLinks = (
-    <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+    <ul className="flex flex-row p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
       {navItems.map((item, index) => {
         const isSelected = item.name === "Home"
           ? currentPath === "/"
@@ -40,20 +44,22 @@ export function SiteHeader() {
   );
 
   return (
-    <header className="sticky top-0 shadow bg-background z-50">
+    <header className="md:sticky md:top-0 shadow bg-background md:z-50">
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
-        <div className="light:border-b">
-          <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Liam Townsley</span>
-            </Link>
-            <div className="items-center justify-between hidden w-full md:flex md:w-auto" id="navbar-search">
-              {navLinks}
-            </div>
-            <div className="inline-flex gap-2">
-              <SearchInput className="" />
-              <ThemeToggle />
-            </div>
+        <div className="md:flex-row sm:flex-col max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 light:border-b">
+          <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+            <span className="self-center md:text-2xl sm:text-base font-semibold whitespace-nowrap dark:text-white">Liam Townsley</span>
+          </Link>
+          <div className="items-center justify-between hidden w-full md:flex md:w-auto" id="navbar-search">
+            {navLinks}
+          </div>
+          <div className="inline-flex gap-2">
+            {isSmallScreen ? (
+              <Button href="/search" variant="outline" icon={Search} />
+            ) : (
+              <SearchInput />
+            )}
+            <ThemeToggle />
           </div>
         </div>
       </nav>

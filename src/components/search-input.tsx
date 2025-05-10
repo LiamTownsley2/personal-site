@@ -5,11 +5,11 @@ import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Search, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useSearch } from "@/context/search-context"
+import { Button as LegacyButton } from "./ui/button";
 
-export function SearchInput({ ...props }: { className: string }) {
+export function SearchInput({ ...props }: { className?: string }) {
     const { searchQuery, setSearchQuery, setIsSearching } = useSearch()
     const [localSearchQuery, setLocalSearchQuery] = useState(searchQuery)
     const router = useRouter()
@@ -36,8 +36,8 @@ export function SearchInput({ ...props }: { className: string }) {
     }
 
     return (
-        <form onSubmit={handleSearch} className={"relative w-full max-w-sm " + props.className}>
-            <div className="relative flex items-center">
+        <form onSubmit={handleSearch} className={"relative w-full max-w-sm " + props?.className || ""}>
+            <div className={`flex relative items-center`}>
                 <Search className="absolute left-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                     ref={inputRef}
@@ -48,7 +48,7 @@ export function SearchInput({ ...props }: { className: string }) {
                     onChange={(e) => setLocalSearchQuery(e.target.value)}
                 />
                 {localSearchQuery && (
-                    <Button
+                    <LegacyButton
                         type="button"
                         variant="ghost"
                         size="sm"
@@ -57,7 +57,7 @@ export function SearchInput({ ...props }: { className: string }) {
                     >
                         <X className="h-4 w-4" />
                         <span className="sr-only">Clear search</span>
-                    </Button>
+                    </LegacyButton>
                 )}
             </div>
         </form>
