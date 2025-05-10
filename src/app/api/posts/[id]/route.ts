@@ -4,9 +4,10 @@ import { authOptions } from "@/lib/auth"
 import { getPostById, updatePost, deletePost } from "@/lib/db-service"
 import type { PostFormData } from "@/models/post"
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const post = await getPostById(params.id)
+    const parameters = await params;
+    const post = await getPostById(parameters.id);
 
     if (!post) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 })
