@@ -1,8 +1,13 @@
 import { SiteFooter } from "@/layouts/SiteFooter";
 import { SiteHeader } from "@/layouts/SiteHeader";
-import { getPostBySlug } from "@/lib/db-service";
-import IndividualPost from "@/pages/BlogPost";
+import { getAllPostSlugs, getPostBySlug } from "@/lib/db-service";
+import IndividualPost from "@/page_layout/BlogPost";
 import { notFound } from "next/navigation";
+
+export async function generateStaticParams() {
+    const slugs = await getAllPostSlugs()
+    return slugs.map(slug => ({ slug }))
+}
 
 export default async function IndividualBlogPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;

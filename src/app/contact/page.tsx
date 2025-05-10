@@ -1,6 +1,6 @@
 import { SiteFooter } from "@/layouts/SiteFooter";
 import { SiteHeader } from "@/layouts/SiteHeader";
-import Contact from "@/pages/Contact";
+import Contact from "@/page_layout/Contact";
 
 export default function ContactPage() {
     return (

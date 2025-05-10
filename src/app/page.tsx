@@ -1,6 +1,6 @@
 import { SiteFooter } from "@/layouts/SiteFooter";
 import { SiteHeader } from "@/layouts/SiteHeader";
-import Home from "@/pages/Home";
+import Home from "@/page_layout/Home";
 
 
 export default function Index() {

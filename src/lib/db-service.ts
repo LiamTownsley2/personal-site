@@ -13,6 +13,14 @@ export async function getAllPosts(includeUnpublished = false): Promise<PostType[
   return await cursor.toArray()
 }
 
+export async function getAllPostSlugs(includeUnpublished = false): Promise<string[]> {
+  const cursor = posts
+    .find({ published: includeUnpublished })
+    .project({ slug: 1, _id: 0 })
+  const results = await cursor.toArray()
+  return results.map(p => p.slug)
+}
+
 export async function getPostById(id: string): Promise<PostType | null> {
   return await posts.findOne({ _id: new ObjectId(id) })
 }
@@ -42,6 +50,14 @@ export async function deletePost(id: string): Promise<boolean> {
 export async function getAllProjects(includeUnpublished = false): Promise<ProjectType[]> {
   const cursor = projects.find({ ...(includeUnpublished ? {} : { published: true }) }).sort({ createdAt: -1 })
   return await cursor.toArray()
+}
+
+export async function getAllProjectIds(includeUnpublished = false): Promise<string[]> {
+  const cursor = projects
+    .find({ published: includeUnpublished })
+    .project({ _id: 1 })
+  const results = await cursor.toArray()
+  return results.map(p => p._id.toString())
 }
 
 export async function getProjectById(id: string): Promise<ProjectType | null> {

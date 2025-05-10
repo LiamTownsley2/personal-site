@@ -4,7 +4,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { signIn } from 'next-auth/react';
 
 type LoginFormValues = {
@@ -12,7 +12,7 @@ type LoginFormValues = {
     password: string;
 };
 
-export default function LoginForm() {
+function LoginChild() {
     const router = useRouter()
 
     const searchParams = useSearchParams()
@@ -86,5 +86,13 @@ export default function LoginForm() {
                 <Button type="submit" disabled={isLoading}>Submit</Button>
             </form>
         </Form>
+    )
+}
+
+export default function LoginForm() {
+    return (
+        <Suspense fallback={<p>Loading...</p>}>
+            <LoginChild />
+        </Suspense>
     )
 }
