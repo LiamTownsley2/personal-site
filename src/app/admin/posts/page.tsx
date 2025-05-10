@@ -18,10 +18,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Plus, Edit, Trash2, Eye } from "lucide-react"
-import type { Post } from "@/models/post"
+import type { PostType } from "@/models/post"
 
 export default function PostsPage() {
-  const [posts, setPosts] = useState<Post[]>([])
+  const [posts, setPosts] = useState<PostType[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -98,7 +98,7 @@ function PostsTable({
   posts,
   isLoading,
   onDelete,
-}: { posts: Post[]; isLoading: boolean; onDelete: (id: string) => void }) {
+}: { posts: PostType[]; isLoading: boolean; onDelete: (id: string) => void }) {
   if (isLoading) {
     return <div className="py-8 text-center">Loading...</div>
   }

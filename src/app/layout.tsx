@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
 import { Inter } from "next/font/google"
 import "@/app/globals.css"
 import { SearchProvider } from "@/context/search-context";
 import { ThemeProvider } from "@/components/theme-provider";
-// import { NextAuthProvider } from "@/components/next-auth-provider";
-// import { ThemeProvider } from "@/components/theme-provider-provider";
 
 const inter = Inter({
   variable: "--font-inter",

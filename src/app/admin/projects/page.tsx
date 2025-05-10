@@ -19,10 +19,10 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Badge } from "@/components/ui/badge"
 import { Plus, Edit, Trash2, Eye } from "lucide-react"
-import type { Project } from "@/models/project"
+import type { ProjectType } from "@/models/project"
 
 export default function ProjectsPage() {
-  const [projects, setProjects] = useState<Project[]>([])
+  const [projects, setProjects] = useState<ProjectType[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -99,7 +99,7 @@ function ProjectsTable({
   projects,
   isLoading,
   onDelete,
-}: { projects: Project[]; isLoading: boolean; onDelete: (id: string) => void }) {
+}: { projects: ProjectType[]; isLoading: boolean; onDelete: (id: string) => void }) {
   if (isLoading) {
     return <div className="py-8 text-center">Loading...</div>
   }

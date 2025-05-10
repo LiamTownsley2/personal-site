@@ -4,9 +4,10 @@ import { authOptions } from "@/lib/auth"
 import { getProjectById, updateProject, deleteProject } from "@/lib/db-service"
 import type { ProjectFormData } from "@/models/project"
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const project = await getProjectById(params.id)
+    const { id } = await params;
+    const project = await getProjectById(id)
 
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 })
@@ -25,8 +26,9 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     const session = await getServerSession(authOptions)
 
     if (!session || session.user?.role !== "admin") {
@@ -34,7 +36,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 
     const projectData: ProjectFormData = await request.json()
-    const updatedProject = await updateProject(params.id, projectData)
+    const updatedProject = await updateProject(id, projectData)
 
     if (!updatedProject) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 })
@@ -46,15 +48,16 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     const session = await getServerSession(authOptions)
 
     if (!session || session.user?.role !== "admin") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    const success = await deleteProject(params.id)
+    const success = await deleteProject(id)
 
     if (!success) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 })

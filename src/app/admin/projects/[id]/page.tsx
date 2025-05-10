@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
 import { ProjectEditor } from "@/components/project-editor"
-import type { Project } from "@/models/project"
+import type { ProjectType } from "@/models/project"
 
 export default function EditProjectPage() {
   const params = useParams()
-  const [project, setProject] = useState<Project | null>(null)
+  const [project, setProject] = useState<ProjectType | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {

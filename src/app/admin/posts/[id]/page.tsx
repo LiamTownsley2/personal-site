@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
 import { PostEditor } from "@/components/post-editor"
-import type { Post } from "@/models/post"
+import type { PostType } from "@/models/post"
 
 export default function EditPostPage() {
   const params = useParams()
-  const [post, setPost] = useState<Post | null>(null)
+  const [post, setPost] = useState<PostType | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {

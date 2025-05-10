@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FileText, FolderKanban } from "lucide-react"
 import { useEffect, useState } from "react";
-import { Post } from "@/models/post";
-import { Project } from "@/models/project";
+import { PostType } from "@/models/post";
+import { ProjectType } from "@/models/project";
 
 export default function AdminIndex() {
-    const [posts, setPosts] = useState<Post[]>([])
-    const [projects, setProjects] = useState<Project[]>([])
+    const [posts, setPosts] = useState<PostType[]>([])
+    const [projects, setProjects] = useState<ProjectType[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
@@ -138,14 +138,14 @@ export default function AdminIndex() {
                                 ) : posts.length > 0 ? (
                                     <div className="space-y-4">
                                         {posts.slice(0, 5).map((post) => (
-                                            <div key={post.id} className="flex items-center justify-between">
+                                            <div key={post._id.toString()} className="flex items-center justify-between">
                                                 <div>
                                                     <p className="font-medium">{post.title}</p>
                                                     <p className="text-sm text-muted-foreground">
                                                         {post.published ? "Published" : "Draft"} • {new Date(post.updatedAt).toLocaleDateString()}
                                                     </p>
                                                 </div>
-                                                <Link href={`/admin/posts/${post.id}`}>
+                                                <Link href={`/admin/posts/${post._id.toString()}`}>
                                                     <Button variant="outline" size="sm">
                                                         Edit
                                                     </Button>
@@ -169,7 +169,7 @@ export default function AdminIndex() {
                                 ) : projects.length > 0 ? (
                                     <div className="space-y-4">
                                         {projects.slice(0, 5).map((project) => (
-                                            <div key={project.id} className="flex items-center justify-between">
+                                            <div key={project._id.toString()} className="flex items-center justify-between">
                                                 <div>
                                                     <p className="font-medium">{project.title}</p>
                                                     <p className="text-sm text-muted-foreground">
@@ -177,7 +177,7 @@ export default function AdminIndex() {
                                                         {new Date(project.updatedAt).toLocaleDateString()}
                                                     </p>
                                                 </div>
-                                                <Link href={`/admin/projects/${project.id}`}>
+                                                <Link href={`/admin/projects/${project._id.toString()}`}>
                                                     <Button variant="outline" size="sm">
                                                         Edit
                                                     </Button>

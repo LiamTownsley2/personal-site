@@ -1,10 +1,10 @@
-import { Project } from "@/models/project";
+import { ProjectType } from "@/models/project";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { LinkIcon } from "lucide-react";
 
-export default function ProjectPreview({ project }: { project: Project }) {
+export default function ProjectPreview({ project }: { project: ProjectType }) {
     return (
         <div className="flex flex-col gap-1 border rounded-lg p-4">
             <Image
@@ -29,7 +29,7 @@ export default function ProjectPreview({ project }: { project: Project }) {
                 </div>
 
                 <div className="mt-auto">
-                    <Link href={`/projects/` + project.id }>
+                    <Link href={`/projects/` + project._id.toString() }>
                         <Button variant={"outline"} className="w-full">
                             <LinkIcon />
                             <p>View Project</p>

@@ -1,11 +1,11 @@
 import { SiteFooter } from "@/layouts/SiteFooter";
 import { SiteHeader } from "@/layouts/SiteHeader";
 import { getPostBySlug } from "@/lib/db-service";
-import IndividualPost from "@/pages/IndividualPost";
+import IndividualPost from "@/pages/BlogPost";
 import { notFound } from "next/navigation";
 
-export default async function IndividualBlogPage({ params }: { params: { slug: string } }) {
-    const {  slug } = await params;
+export default async function IndividualBlogPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
     const post = await getPostBySlug(slug);
 
     if (!post || !post.published) {

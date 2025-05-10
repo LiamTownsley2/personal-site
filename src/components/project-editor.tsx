@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
 import { Card, CardContent } from "@/components/ui/card"
-import type { Project, ProjectFormData } from "@/models/project"
+import type { ProjectFormData, ProjectType } from "@/models/project"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,7 +26,7 @@ import { Loader2, Save, Trash2, X } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
 interface ProjectEditorProps {
-  project?: Project
+  project?: ProjectType
   isNew?: boolean
 }
 
@@ -89,7 +89,7 @@ export function ProjectEditor({ project, isNew = false }: ProjectEditorProps) {
     setIsSaving(true)
 
     try {
-      const url = isNew ? "/api/projects" : `/api/projects/${project?.id}`
+      const url = isNew ? "/api/projects" : `/api/projects/${project?._id.toString()}`
       const method = isNew ? "POST" : "PUT"
 
       const res = await fetch(url, {
@@ -114,12 +114,12 @@ export function ProjectEditor({ project, isNew = false }: ProjectEditorProps) {
   }
 
   const handleDelete = async () => {
-    if (!project?.id) return
+    if (!project?._id.toString()) return
 
     setIsDeleting(true)
 
     try {
-      const res = await fetch(`/api/projects/${project.id}`, {
+      const res = await fetch(`/api/projects/${project._id.toString()}`, {
         method: "DELETE",
       })
 

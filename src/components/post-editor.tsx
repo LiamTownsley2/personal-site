@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
 import { Card, CardContent } from "@/components/ui/card"
-import type { Post, PostFormData } from "@/models/post"
+import type { PostType, PostFormData } from "@/models/post"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,7 +25,7 @@ import {
 import { Loader2, Save, Trash2 } from "lucide-react"
 
 interface PostEditorProps {
-  post?: Post
+  post?: PostType
   isNew?: boolean
 }
 
@@ -67,7 +67,7 @@ export function PostEditor({ post, isNew = false }: PostEditorProps) {
     setIsSaving(true)
 
     try {
-      const url = isNew ? "/api/posts" : `/api/posts/${post?.id}`
+      const url = isNew ? "/api/posts" : `/api/posts/${post?._id.toString()}`
       const method = isNew ? "POST" : "PUT"
 
       const res = await fetch(url, {
@@ -92,12 +92,12 @@ export function PostEditor({ post, isNew = false }: PostEditorProps) {
   }
 
   const handleDelete = async () => {
-    if (!post?.id) return
+    if (!post?._id.toString()) return
 
     setIsDeleting(true)
 
     try {
-      const res = await fetch(`/api/posts/${post.id}`, {
+      const res = await fetch(`/api/posts/${post._id.toString()}`, {
         method: "DELETE",
       })
 

@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb"
 
-export interface Post {
+export interface PostType {
   _id: ObjectId
   title: string
   slug: string

@@ -19,9 +19,6 @@ export const authOptions: NextAuthOptions = {
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
-                // This is where you would typically verify against your database
-                // For now, we'll use a hardcoded admin user
-                // Replace this with your database logic later
                 if (credentials?.email === process.env.ADMIN_EMAIL && credentials?.password === process.env.ADMIN_PASSWORD) {
                     return {
                         id: "1",
@@ -35,8 +32,8 @@ export const authOptions: NextAuthOptions = {
         }),
     ],
     pages: {
-        signIn: "/admin/login",
-        error: "/admin/login",
+        signIn: "/login",
+        error: "/login",
     },
     callbacks: {
         async jwt({ token, user }) {
@@ -56,7 +53,7 @@ export const authOptions: NextAuthOptions = {
     },
     session: {
         strategy: "jwt",
-        maxAge: 30 * 24 * 60 * 60, // 30 days
+        maxAge: 30 * 24 * 60 * 60,
     },
     secret: process.env.NEXTAUTH_SECRET,
     debug: process.env.NODE_ENV === "development",
