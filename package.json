@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm run pull-env && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pull-env": "vercel env pull"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -44,6 +45,7 @@
     "remark-smartypants": "^3.0.2",
     "tailwind-merge": "^3.2.0",
     "tailwindcss-animate": "^1.0.7",
+    "vercel": "^41.7.4",
     "zod": "^3.24.4"
   },
   "devDependencies": {
