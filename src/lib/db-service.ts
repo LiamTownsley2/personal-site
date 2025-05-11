@@ -1,16 +1,28 @@
 "use server"
-import { MongoClient, ObjectId } from "mongodb"
+import { Collection, MongoClient, ObjectId } from "mongodb"
 import type { PostType, PostFormData } from "@/models/post"
 import type { ProjectType, ProjectFormData } from "@/models/project"
 import { SearchResult } from "@/app/search/page"
 
-const client = new MongoClient(process.env.MONGODB_URI!)
-const db = client.db(process.env.DB_NAME || "myApp")
-const posts = db.collection<PostType>("posts")
-const projects = db.collection<ProjectType>("projects")
+let client: MongoClient
+let posts: Collection<PostType>
+let projects: Collection<ProjectType>
 
-projects.createIndex({ title: "text", description: "text", tags: "text" })
-posts.createIndex({ title: "text", excerpt: "text" })
+async function initDb() {
+  if (!client) {
+    client = new MongoClient(process.env.MONGODB_URI!)
+    await client.connect()
+    const db = client.db(process.env.DB_NAME || "myApp")
+    posts = db.collection<PostType>("posts")
+    projects = db.collection<ProjectType>("projects")
+
+    await Promise.all([
+      projects.createIndex({ title: "text", description: "text", tags: "text" }),
+      posts.createIndex({ title: "text", excerpt: "text" }),
+    ])
+  }
+}
+await initDb()
 
 export async function getAllPosts(includeUnpublished = false): Promise<PostType[]> {
   const cursor = posts.find({ ...(includeUnpublished ? {} : { published: true }) }).sort({ createdAt: -1 })
