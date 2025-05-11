@@ -1,17 +1,7 @@
 "use client"
 
+import { SearchResult } from "@/app/search/page"
 import { createContext, useContext, useState, type ReactNode } from "react"
-
-type SearchResult = {
-  id: number
-  title: string
-  description?: string
-  excerpt?: string
-  type: "project" | "blog"
-  url: string
-  image?: string
-  date?: string
-}
 
 interface SearchContextType {
   searchQuery: string

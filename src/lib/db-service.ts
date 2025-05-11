@@ -2,11 +2,15 @@
 import { MongoClient, ObjectId } from "mongodb"
 import type { PostType, PostFormData } from "@/models/post"
 import type { ProjectType, ProjectFormData } from "@/models/project"
+import { SearchResult } from "@/app/search/page"
 
 const client = new MongoClient(process.env.MONGODB_URI!)
 const db = client.db(process.env.DB_NAME || "myApp")
 const posts = db.collection<PostType>("posts")
 const projects = db.collection<ProjectType>("projects")
+
+projects.createIndex({ title: "text", description: "text", tags: "text" })
+posts.createIndex({ title: "text", excerpt: "text" })
 
 export async function getAllPosts(includeUnpublished = false): Promise<PostType[]> {
   const cursor = posts.find({ ...(includeUnpublished ? {} : { published: true }) }).sort({ createdAt: -1 })
@@ -84,4 +88,42 @@ export async function updateProject(id: string, projectData: ProjectFormData): P
 export async function deleteProject(id: string): Promise<boolean> {
   const result = await projects.deleteOne({ _id: new ObjectId(id) })
   return result.deletedCount > 0
+}
+
+export async function searchContent(query: string): Promise<SearchResult[]> {
+  if (!query) return []
+  const normalizedQuery = query.toLowerCase().trim()
+
+  const projectResults: SearchResult[] = await projects.find({
+    $text: { $search: normalizedQuery }
+  })
+    .toArray()
+    .then(projects =>
+      projects.map(p => ({
+        id: p._id.toString(),
+        title: p.title,
+        description: p.description,
+        type: 'project',
+        url: `/projects/${p._id.toString()}`,
+        coverImage: p.coverImage,
+      }))
+    )
+
+  const blogResults: SearchResult[] = await posts.find({
+    $text: { $search: normalizedQuery }
+  })
+    .toArray()
+    .then(posts =>
+      posts.map(post => ({
+        id: post._id.toString(),
+        title: post.title,
+        excerpt: post.excerpt,
+        type: 'blog',
+        url: `/blog/${post.slug}`,
+        coverImage: post.coverImage,
+        date: post.date,
+      }))
+    )
+
+  return [...projectResults, ...blogResults]
 }
