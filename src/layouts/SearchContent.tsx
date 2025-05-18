@@ -16,7 +16,7 @@ const PAGE_BUTTONS: ButtonParams[] = [
     { href: "/", icon: ArrowLeft, label: "Back to Home", variant: "outline" }
 ];
 
-export default function SearchContent() {
+function SearchContentChild() {
     const searchParams = useSearchParams();
     const [localQuery, setLocalQuery] = useState("");
     const { searchQuery, setSearchQuery, searchResults, setSearchResults } = useSearch();
@@ -88,4 +88,10 @@ export default function SearchContent() {
             <FooterButtonRow buttons={PAGE_BUTTONS} />
         </Main >
     );
+}
+
+export default function SearchContent() {
+    return <Suspense fallback={<p>Loading...</p>}>
+        <SearchContentChild />
+    </Suspense>
 }
