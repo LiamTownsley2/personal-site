@@ -1,12 +1,10 @@
-import { ProjectType } from "@/models/project";
-
-export type ProjectDetailsParams = { project: ProjectType }
-export default function ProjectDetails(params: ProjectDetailsParams) {
+export type ProjectTextDetailsParams = { title: string, tags: string[], description: string }
+export default function ProjectTextDetails(params: ProjectTextDetailsParams) {
     return (
         <div className="space-y-4">
-            <h1 className="text-3xl font-bold">{params.project?.title}</h1>
+            <h1 className="text-3xl font-bold">{params.title}</h1>
             <div className="flex flex-wrap gap-2">
-                {params.project.tags.map((tag) => (
+                {params.tags.map((tag) => (
                     <span
                         key={tag}
                         className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold"
@@ -15,7 +13,7 @@ export default function ProjectDetails(params: ProjectDetailsParams) {
                     </span>
                 ))}
             </div>
-            <p className="text-gray-600 dark:text-gray-400">{params.project?.description}</p>
+            <p className="text-gray-600 dark:text-gray-400">{params.description}</p>
         </div>
     )
 }

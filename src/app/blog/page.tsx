@@ -1,18 +1,20 @@
+"use client"
 import { SiteFooter } from "@/layouts/SiteFooter"
 import { SiteHeader } from "@/layouts/SiteHeader"
-import { getAllPosts } from "@/lib/db-service"
+// import { getAllPosts } from "@/lib/db-service"
 import Blog from "@/layouts/BlogList"
-import { notFound } from "next/navigation"
+// import { notFound } from "next/navigation"
 
-export default async function BlogPage() {
-  const posts = await getAllPosts()
+export default function BlogPage() {
 
-  if (!posts) notFound()
+  // const posts = await getAllPosts()
+
+  // if (!posts) notFound()
 
   return (
     <div className="flex flex-col min-h-screen">
       <SiteHeader />
-      <Blog posts={posts} />
+      <Blog />
       <SiteFooter />
     </div>
   )

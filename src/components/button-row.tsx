@@ -7,7 +7,7 @@ export type JustifyType = "justify-start" | "justify-end" | "justify-around" | "
     "justify-self-start" | "justify-self-stretch" | "justify-start" | "justify-stretch" | "text-justify";
 
 export type ButtonRowParams = {
-    buttons: (ButtonParams | JSX.Element)[],
+    buttons: (ButtonParams | JSX.Element | undefined)[],
     justify?: JustifyType,
     gap?: string
 };
