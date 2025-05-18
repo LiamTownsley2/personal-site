@@ -103,39 +103,54 @@ export async function deleteProject(id: string): Promise<boolean> {
 }
 
 export async function searchContent(query: string): Promise<SearchResult[]> {
-  if (!query) return []
-  const normalizedQuery = query.toLowerCase().trim()
+  if (!query) return [];
 
-  const projectResults: SearchResult[] = await projects.find({
-    $text: { $search: normalizedQuery }
-  })
-    .toArray()
-    .then(projects =>
-      projects.map(p => ({
-        id: p._id.toString(),
-        title: p.title,
-        description: p.description,
-        type: 'project',
-        url: `/projects/${p._id.toString()}`,
-        coverImage: p.coverImage,
-      }))
-    )
+  const normalizedQuery = query.toLowerCase().trim();
 
-  const blogResults: SearchResult[] = await posts.find({
-    $text: { $search: normalizedQuery }
-  })
-    .toArray()
-    .then(posts =>
-      posts.map(post => ({
-        id: post._id.toString(),
-        title: post.title,
-        excerpt: post.excerpt,
-        type: 'blog',
-        url: `/blog/${post.slug}`,
-        coverImage: post.coverImage,
-        date: post.date,
-      }))
-    )
+  const [projectDocs, blogDocs] = await Promise.all([
+    projects.find(
+      { $text: { $search: normalizedQuery } },
+      {
+        projection: {
+          title: 1,
+          description: 1,
+          coverImage: 1,
+        },
+      }
+    ).toArray(),
+    posts.find(
+      { $text: { $search: normalizedQuery } },
+      {
+        projection: {
+          title: 1,
+          excerpt: 1,
+          slug: 1,
+          coverImage: 1,
+          date: 1,
+          published: 1
+        },
+      }
+    ).toArray(),
+  ]);
 
-  return [...projectResults, ...blogResults]
+  const projectResults: SearchResult[] = projectDocs.map(p => ({
+    id: p._id.toString(),
+    title: p.title,
+    description: p.description,
+    type: 'project',
+    url: `/projects/${p._id}`,
+    coverImage: p.coverImage,
+  }));
+
+  const blogResults: SearchResult[] = blogDocs.map(p => ({
+    id: p._id.toString(),
+    title: p.title,
+    excerpt: p.excerpt,
+    type: 'blog',
+    url: `/blog/${p.slug}`,
+    coverImage: p.coverImage,
+    date: p.date,
+  }));
+
+  return [...projectResults, ...blogResults];
 }
