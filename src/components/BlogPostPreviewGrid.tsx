@@ -12,7 +12,7 @@ export default function BlogPostPreviewGrid({ showDrafts = false }: { showDrafts
 
     const filteredPosts = showDrafts
     ? data
-    : data.filter((post: PostType) => !post.published);
+    : data.filter((post: PostType) => post.published);
 
     return (
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
